@@ -12,6 +12,7 @@
         }
     };
 
+    // 初次调用
     hideGarbage();
 
     var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver
