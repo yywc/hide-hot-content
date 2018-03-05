@@ -1,0 +1,21 @@
+{
+    "manifest_version": 2,
+    "name": "hideHot",
+    "description": "隐藏知乎上的热门内容",
+    "version": "1",
+    "browser_action": {
+        "default_icon": "icon.png",
+        "default_title": "隐藏知乎上的热门内容"
+    },
+    "content_scripts": [
+        {
+            "run_at": "document_end",
+            "matches": [
+                "*://*.zhihu.com/*"
+            ],
+            "js": [
+                "main.js"
+            ]
+        }
+    ]
+}
