@@ -14,15 +14,12 @@
         }
     };
 
-    // 初次调用
-    hideHotContent();
-
+    // 观察者模式
     var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver
     // 选择目标节点
     var observedEle = document.getElementsByClassName(main)[0].children[0];
     // 创建观察者对象
     var observer = new MutationObserver(function (mutations) {
-        console.log(mutations)
         for (var mutation of mutations) {
             if (mutation.type === 'childList') {
                 hideHotContent(mutation.addedNodes)
@@ -35,4 +32,7 @@
     }
     // 传入目标节点和观察选项
     observer.observe(observedEle, config);
+
+    // 初次调用
+    hideHotContent();
 })();
