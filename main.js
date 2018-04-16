@@ -1,19 +1,38 @@
-function purify(nodes) {
-    for (let node of nodes) {
-        if (node.textContent.indexOf('热门内容, ') === 0) {
-            node.querySelector('.TopstoryItem-rightButton').click()
-            node.parentNode.removeChild(node)
+(function () {
+    // 单条消息父级元素className
+    var main = 'TopstoryMain';
+    // 单条消息右侧的关闭按钮className
+    var buttion = 'TopstoryItem-rightButton';
+    // 单条消息div    
+    var items = document.getElementsByClassName(item);
+    var hideHotContent = function (nodes) {
+        for (var node of nodes) {
+            if (node.textContent.indexOf('热门内容, ') === 0) {
+                // node.querySelector(button).click();
+                node.parentNode.removeChild(node);
+            }
         }
-    }
-}
+    };
 
-const mo = new MutationObserver(mutations => {
-    for (let mutation of mutations) {
-        if (mutation.type === 'childList') {
-            purify(mutation.addedNodes)
+    // 初次调用
+    hideHotContent();
+
+    var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver
+    // 选择目标节点
+    var observedEle = document.getElementsByClassName(main)[0].children[0];
+    // 创建观察者对象
+    var observer = new MutationObserver(function (mutations) {
+        console.log(mutations)
+        for (var mutation of mutations) {
+            if (mutation.type === 'childList') {
+                hideHotContent(mutation.addedNodes)
+            }
         }
+    });
+    // 配置观察选项:
+    var config = {
+        childList: true
     }
-})
-
-purify(document.querySelectorAll('.TopstoryItem'))
-mo.observe(document.querySelector('.TopstoryMain > div'), { childList: true })
+    // 传入目标节点和观察选项
+    observer.observe(observedEle, config);
+})();
