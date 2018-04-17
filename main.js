@@ -1,19 +1,20 @@
 (function () {
-    // 单条消息div    
-    var items = document.getElementsByClassName('TopstoryItem');
-    var hideHotContent = function (nodes) {
+    var hideHotContent = function (nodes, flag) {
         for (var node of nodes) {
             if (node.textContent.indexOf('热门内容') === 0) {
-                node.children[0].click()
-                // node.parentNode.removeChild(node);
+                if (flag) {
+                    node.children[0].click()
+                } else {
+                    node.children[0].click()
+                    node.style.display = 'none';
+                }
             }
         }
     };
 
+
     // 观察者模式
-    var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver
-    // 选择目标节点
-    var observedEle = document.getElementsByClassName('TopstoryMain')[0].children[0];
+    var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
     // 创建观察者对象
     var observer = new MutationObserver(function (mutations) {
         for (var mutation of mutations) {
@@ -27,8 +28,10 @@
         childList: true
     }
     // 传入目标节点和观察选项
+    var observedEle = document.getElementsByClassName('TopstoryMain')[0].children[0];
     observer.observe(observedEle, config);
 
-    // 初次调用
-    hideHotContent(items);
+    // 初次调用    
+    var items = document.getElementsByClassName('TopstoryItem');
+    hideHotContent(items, true);
 })();
